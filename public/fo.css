@@ -1,0 +1,10 @@
+/**
+ * Created by FO on 2018-1-2 21:36:55.
+ */
+.pager .dropdown-menu{
+    min-width:50px;
+}
+.dropdown-menu li a{
+    display:block;
+    text-align:center;
+}
