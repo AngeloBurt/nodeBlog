@@ -5,6 +5,7 @@ var express = require('express');
 var router = express.Router();
 var User = require('../models/User');
 var Category = require('../models/Category');
+var Content = require('../models/Content');
 
 router.use(function (req, res, next) {
     if (!req.userInfo.isAdmin) {
@@ -59,7 +60,7 @@ router.get('/category', function (req, res) {
         page = Math.min(page, pages);
         page = Math.max(page, 1);
         var skip = (page - 1) * limit;
-        Category.find().limit(limit).skip(skip).then(function (categories) {
+        Category.find().sort({_id:-1}).limit(limit).skip(skip).then(function (categories) {
             res.render('admin/category', {
                 userInfo: req.userInfo,
                 categories: categories,
@@ -208,6 +209,62 @@ router.get("/category/delete",function(req,res){
         });
     })
 })
+
+/*
+* 内容首页
+* */
+router.get('/content',function(req,res){
+    res.render('admin/content',{
+        userInfo: req.userInfo
+    })
+})
+/*
+* 内容添加页面
+* */
+router.get('/content/add',function(req,res){
+    Category.find().sort({_id:-1}).then(function(categories){
+        res.render('admin/content_add',{
+            userInfo: req.userInfo,
+            categories: categories
+        })
+    })
+
+})
+/*
+* 内容删除页面
+* */
+router.post('/content/add',function(req,res){
+    //console.log(req.body)
+    if(req.body.category == ''){
+        res.render("admin/error",{
+            userInfo: req.userInfo,
+            message:'分类内容不能为空'
+        })
+        return;
+    }
+    if(req.body.title == ''){
+        res.render("admin/error",{
+            userInfo: req.userInfo,
+            message:'分类标题不能为空'
+        })
+        return;
+    }
+
+    //保存数据到数据库
+    new Content({
+        category: req.body.category,
+        title: req.body.title,
+        description: req.body.description,
+        content: req.body.content
+    }).save().then(function(rs){
+            res.render("admin/success",{
+                userInfo: req.userInfo,
+                message:'内容保存成功'
+            })
+        })
+
+})
+
 module.exports = router;
 
 
