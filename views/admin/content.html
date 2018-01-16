@@ -29,8 +29,8 @@
         <td>{{content.addTime|date('Y年m月d日 H:i:s', -8*60)}}</td>
         <td>{{content.views}}</td>
         <td>
-            <a href='/admin/content/edit?id={{content._id.toString()}}'>编辑</a>
-            <a href='/admin/content/delete?id={{content._id.toString()}}'>删除</a>
+            <a href='/admin/content_edit?id={{content._id.toString()}}'>编辑</a>
+            <a href='/admin/content_delete?id={{content._id.toString()}}'>删除</a>
         </td>
     </tr>
     {% endfor %}
