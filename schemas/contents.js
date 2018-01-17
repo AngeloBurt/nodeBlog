@@ -14,6 +14,21 @@ module.exports = new mongoose.Schema({
     },
     //内容名称
     title: String,
+    //关联字段-用户
+    user: {
+        //类型
+        type: mongoose.Schema.Types.ObjectId,
+        //引用
+        ref: 'User'
+    },
+    addTime:{
+        type: Date,
+        default: new Date()
+    },
+    views:{
+        type: Number,
+        default: 0
+    },
 
     //简介
     description: {

@@ -106,16 +106,23 @@ li{
 }
 
 .articleWrap li >button{
-    background: #3379b7;
+    /*background: #3379b7;*/
+    background: #F74703;
     color: #ffffff;
     font-size: 12px;
     padding: 4px 8px;
+    border-radius: 5px;
+    border: 0;
 }
 .articleWrap li >button>a{
     color: #ffffff;
     text-decoration: none;
 }
 
+.title-info span b{
+    color:#3879D9;
+    font-weight: normal;
+}
 
 .userForm{
     padding: 10px;

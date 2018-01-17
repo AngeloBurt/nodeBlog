@@ -215,7 +215,6 @@ router.get("/category/delete", function (req, res) {
  * */
 router.get('/content', function (req, res) {
     var page = Number(req.query.page || 1);
-    //var limit = Number(req.query.limit || 5);
     var limit = 5;
     var pages = 0;
 
@@ -224,7 +223,9 @@ router.get('/content', function (req, res) {
         page = Math.min(page, pages);
         page = Math.max(page, 1);
         var skip = (page - 1) * limit;
-        Content.find().sort({_id: -1}).limit(limit).skip(skip).populate('category').then(function (contents) {
+        Content.find().sort({_id: -1}).limit(limit).skip(skip).populate(['category','user']).sort({addTime:-1}).then(function (contents) {
+            //console.log(contents)
+
             res.render('admin/content', {
                 userInfo: req.userInfo,
                 contents: contents,
@@ -272,6 +273,7 @@ router.post('/content/add', function (req, res) {
     new Content({
         category: req.body.category,
         title: req.body.title,
+        user: req.userInfo._id.toString(),
         description: req.body.description,
         content: req.body.content
     }).save().then(function (rs) {

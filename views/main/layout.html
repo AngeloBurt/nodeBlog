@@ -23,14 +23,16 @@
             </div>
             <div>
                 <ul class="nav navbar-nav">
-                    {% for category in categories %}
+                    {% for cate in categories %}
+                        {% if category == cate.id %}
                     <li>
-                        {% if category == category.id %}
-                        <a href="/?category={{category.id}}" class="focus">{{category.name}}</a>
-                        {% else %}
-                        <a href="/?category={{category.id}}">{{category.name}}</a>
-                        {% endif %}
+                        <a href="/?category={{cate.id}}" class="focus">{{cate.name}}</a>
                     </li>
+                        {% else %}
+                    <li>
+                        <a href="/?category={{cate.id}}">{{cate.name}}</a>
+                    </li>
+                        {% endif %}
                     {% endfor %}
                 </ul>
             </div>
