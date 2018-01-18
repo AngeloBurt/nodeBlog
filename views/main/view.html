@@ -6,10 +6,10 @@
         <li>
             <h2>{{content.title}}</h2>
             <div class="title-info">
-                <span>作者:{{content.user.username}}</span>
-                <span>时间:{{content.addTime|date('Y年m月d日 H:i:s', -8*60)}}</span>
-                <span>阅读:{{content.views}}</span>
-                <span>评论:10</span>
+                <span>作者: <b> {{content.user.username}}</b></span>
+                <span>时间:<b>{{content.addTime|date('Y年m月d日 H:i:s', -8*60)}}</b></span>
+                <span>阅读:<b>{{content.views}}</b></span>
+                <span>评论:<b>10</b></span>
             </div>
             <div class="content">
                 {{content.content}}
@@ -22,7 +22,7 @@
             <span class="fl">评论</span>
             <span class="fr">一共有<span id="commentNum"></span>条评论</span>
         </div>
-        {% if userinfo.id %}
+        {% if userInfo._id %}
         <div class="formWrap">
             <input type="hidden" id="contentId" value="{{content.id}}"/>
             <textarea  rows="3" class="form-control" name="content" id="content"></textarea>
@@ -35,5 +35,5 @@
 
         </ul>
     </div>
-<script src="public/js/comment.js"></script>
+<script src="../../public/js/comment.js"></script>
 {% endblock %}

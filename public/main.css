@@ -119,8 +119,8 @@ li{
     text-decoration: none;
 }
 
-.title-info span b{
-    color:#3879D9;
+.title-info span b,.articleWrap span b{
+    color:#3CB5D4;
     font-weight: normal;
 }
 

@@ -5,6 +5,8 @@ var express = require('express');
 var router = express.Router();
 
 var User = require('../models/User');
+var Content = require('../models/Content');
+
 
 //统一返回格式
 var responseData;
@@ -91,7 +93,7 @@ router.post('/user/login', function (req, res) {
         responseData.message = '登陆成功';
         responseData.userInfo = {
             _id:userInfo._id,
-            username: userInfo.username,
+            username: userInfo.username
         };
         req.cookies.set('userInfo',JSON.stringify({
             _id:userInfo._id,
@@ -108,6 +110,47 @@ router.get('/user/logout',function(req,res){
     req.cookies.set('userInfo',null);
     res.json(responseData);
 });
+
+
+/*
+* 评论提交
+* */
+router.post('/comment/post',function(req,res){
+    //内容的id
+    var contentId = req.body.contentid || '';
+    var postData = {
+        username: req.userInfo.username,
+        postTime: new Date(),
+        content: req.body.content
+    }
+    Content.findOne({
+        _id: contentId
+    }).then(function(content){
+        content.comments.push(postData);
+        return content.save();
+    }).then(function(newContent){
+        responseData.message = '评论成功';
+        responseData.data = newContent;
+        res.json(responseData)
+    })
+})
+
+
+/*
+* 获取文章的指定评论
+* */
+router.get('/comment',function(req,res){
+    console.log(req.query.contentid);
+    var contentId = req.query.contentid || '';
+    Content.findOne({
+        _id: contentId
+    }).then(function(content){
+        responseData.data = content.comments;
+        res.json(responseData)
+    })
+
+})
+
 module.exports = router;
 
 

@@ -8,26 +8,31 @@ $('#submitCommet').on('click', function () {
 
     $.ajax({
         type: 'post',
-        url: 'api/comment/post',
+        url: '/api/comment/post',
         data: {
             contentid: contentId,
             content: content
         },
         dataType: 'json',
         success: function (result) {
+            console.log(result.data);
             const comments = result.data.comments.reverse();
             $('#commentNum').html(comments.length);
             $('#content').val('');
-            let html = '';
-            for (let i=0; i<comments.length; i++) {
-                html+='<li><div><span class="fl">'+comments[i].username+'</span>' +
-                    '<span class="fr">'+ transformTime(comments[i].postTime) +'</span></div>' +
-                    '<div>'+comments[i].content+'</div></li>';
-            }
-            $('#list').html(html);
+            renderComment(result.data.comments);
         }
     })
 })
+
+function renderComment(comments) {
+    var html = '';
+    for (var i = 0; i < comments.length; i++) {
+        html += '<li><div><span class="fl">' + comments[i].username + '</span>' +
+        '<span class="fr">' + transformTime(comments[i].postTime) + '</span></div>' +
+        '<div>' + comments[i].content + '</div></li>';
+    }
+    $('#list').html(html);
+}
 
 
 $.ajax({
@@ -38,20 +43,12 @@ $.ajax({
     },
     dataType: 'json',
     success: function (result) {
-        const comments = result.data.comments.reverse();
-        $('#commentNum').html(comments.length);
-        let html = '';
-        for (let i=0; i<comments.length; i++) {
-            html+='<li><div><span class="fl">'+comments[i].username+'</span>' +
-                '<span class="fr">'+ transformTime(comments[i].postTime) +'</span></div>' +
-                '<div>'+comments[i].content+'</div></li>';
-        }
-        $('#list').html(html);
+        renderComment(result.data.reverse())
     }
 })
 
 
 function transformTime(time) {
     const d = new Date(time);
-    return d.getFullYear() + '年' + (d.getMonth()+1) + '月' + d.getDate() + '日  ' + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds()
+    return d.getFullYear() + '年' + (d.getMonth() + 1) + '月' + d.getDate() + '日  ' + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds()
 }
