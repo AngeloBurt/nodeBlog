@@ -140,7 +140,7 @@ router.post('/comment/post',function(req,res){
 * 获取文章的指定评论
 * */
 router.get('/comment',function(req,res){
-    console.log(req.query.contentid);
+    //console.log(req.query.contentid);
     var contentId = req.query.contentid || '';
     Content.findOne({
         _id: contentId

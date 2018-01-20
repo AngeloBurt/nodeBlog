@@ -9,7 +9,7 @@
                 <span>作者: <b> {{content.user.username}}</b></span>
                 <span>时间:<b>{{content.addTime|date('Y年m月d日 H:i:s', -8*60)}}</b></span>
                 <span>阅读:<b>{{content.views}}</b></span>
-                <span>评论:<b>10</b></span>
+                <span>评论:<b>{{content.comments.length}}</b></span>
             </div>
             <div class="content">
                 {{content.content}}
@@ -34,6 +34,18 @@
         <ul class="list" id="list">
 
         </ul>
+
+        <div class="pager">
+            <ul class="clear">
+                <li class="previous">
+                    <a href="">上一页</a>
+                </li>
+                <li></li>
+                <li class="next">
+                    <a href="">下一页</a>
+                </li>
+            </ul>
+        </div>
     </div>
 <script src="../../public/js/comment.js"></script>
 {% endblock %}
